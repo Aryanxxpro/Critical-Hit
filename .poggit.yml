@@ -5,4 +5,5 @@ branches:
 projects:
   Critical-Hit:
     path: ""
+    icon: icon.png
 ...
