@@ -18,11 +18,11 @@ class main extends PluginBase implements Listener {
         $entity = $event->getEntity();
         $damager = $event->getDamager();
     
-    if ($damager instanceof Player) {
-        $packet = new AnimatePacket();
-        $packet->action = AnimatePacket::ACTION_CRITICAL_HIT; 
-        $packet->actorRuntimeId = $entity->getId();
-        $damager->getNetworkSession()->sendDataPacket($packet);
+        if ($damager instanceof Player) {
+            $packet = new AnimatePacket();
+            $packet->action = AnimatePacket::ACTION_CRITICAL_HIT; 
+            $packet->actorRuntimeId = $entity->getId();
+            $damager->getNetworkSession()->sendDataPacket($packet);
         }
     }
 }
