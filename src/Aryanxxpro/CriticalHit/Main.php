@@ -8,7 +8,7 @@ use pocketmine\player\Player;
 use pocketmine\event\entity\EntityDamageByEntityEvent;
 use pocketmine\network\mcpe\protocol\AnimatePacket;
 
-class main extends PluginBase implements Listener {
+class Main extends PluginBase implements Listener {
     
     public function onEnable(): void{
     $this->getServer()->getPluginManager()->registerEvents($this, $this);
