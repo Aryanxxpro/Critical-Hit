@@ -1,6 +1,6 @@
 name: CriticalHit
 version: 1.0.0
 api: 5.0.0
-main: Aryanxxpro\CriticalHit\main
+main: Aryanxxpro\CriticalHit\Main
 author: Aryanxxpto
 discription: A pocketmine plugin that shows Critical particle when you hit a player or an entity!
