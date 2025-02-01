@@ -4,3 +4,12 @@ api: 5.0.0
 main: Aryanxxpro\CriticalHit\Main
 author: Aryanxxpro
 description: A pocketmine plugin that shows Critical particle when you hit a player or an entity!
+
+commands:
+ critical:
+  description: Enable or disable critical hit!
+  permission: critical.command
+  
+permissions:
+ critical.command:
+  default: true
