@@ -66,7 +66,7 @@ class Main extends PluginBase implements Listener {
         $damager = $event->getDamager();
         
         if ($damager instanceof Player) {
-            $name = $event->getDamager()->getName();
+            $name = $damager()->getName();
             $config = new Config($this->getDataFolder() . "$name.yml", Config::YAML);
 
             if($config->get("critical") === true) {
