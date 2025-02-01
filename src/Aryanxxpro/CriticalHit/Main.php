@@ -22,7 +22,7 @@ class Main extends PluginBase implements Listener {
         $name = $event->getPlayer()->getName();
         $file = $this->getDataFolder() . "$name.yml";
 
-        if(!file_exists($file)) {
+        if (!file_exists($file)) {
             $config = new Config($file, Config::YAML);
             $config->set("critical", true);
             $config->save();
@@ -35,7 +35,7 @@ class Main extends PluginBase implements Listener {
                 $name = $sender->getName();
                 $file = $this->getDataFolder() . "$name.yml";
 
-                if(!file_exists($file)) {
+                if (!file_exists($file)) {
                     return false;
                 }
 
