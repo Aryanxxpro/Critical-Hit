@@ -33,7 +33,13 @@ class Main extends PluginBase implements Listener {
         if ($cmd->getName() === "critical") {
             if ($sender instanceof Player) {
                 $name = $sender->getName();
-                $config = new Config($this->getDataFolder() . "$name.yml", Config::YAML);
+                $file = $this->getDataFolder() . "$name.yml";
+
+                if(!file_exists($file)) {
+                    return false;
+                }
+
+                $config = new Config($file, Config::YAML);
 
                 if (isset($args[0])) {
                     switch ($args[0]) {
@@ -50,7 +56,7 @@ class Main extends PluginBase implements Listener {
                             break;
                     }
                 } else {
-                  $sender->sendMessage("§cUsage: §7/critical [§aenabme §7/ §cdisablef§7]");
+                    $sender->sendMessage("§cUsage: §7/critical [§aenable §7/ §cdisable§7]");
                 }
                 return true;
             } else {
@@ -61,17 +67,21 @@ class Main extends PluginBase implements Listener {
         return false;
     }
 
-    public function onDamage(EntityDamageByEntityEvent $event) {
+    public function onDamage(EntityDamageByEntityEvent $event): void {
         $entity = $event->getEntity();
         $damager = $event->getDamager();
-        
-        if ($damager instanceof Player) {
-            $name = $event->getDamager()->getName();
-            $config = new Config($this->getDataFolder() . "$name.yml", Config::YAML);
 
-            if($config->get("critical") === true) {
+        if ($damager instanceof Player) {
+            $name = $damager->getName();
+            $file = $this->getDataFolder() . "$name.yml";
+
+            if (!file_exists($file)) return;
+
+            $config = new Config($file, Config::YAML);
+
+            if ($config->get("critical") === true) {
                 $packet = new AnimatePacket();
-                $packet->action = AnimatePacket::ACTION_CRITICAL_HIT; 
+                $packet->action = AnimatePacket::ACTION_CRITICAL_HIT;
                 $packet->actorRuntimeId = $entity->getId();
                 $damager->getNetworkSession()->sendDataPacket($packet);
             }
