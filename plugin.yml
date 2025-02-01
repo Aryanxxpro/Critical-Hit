@@ -3,4 +3,4 @@ version: 1.0.0
 api: 5.0.0
 main: Aryanxxpro\CriticalHit\Main
 author: Aryanxxpro
-discription: A pocketmine plugin that shows Critical particle when you hit a player or an entity!
+description: A pocketmine plugin that shows Critical particle when you hit a player or an entity!
