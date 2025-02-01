@@ -40,13 +40,13 @@ class Main extends PluginBase implements Listener {
                         case "enable":
                             $config->set("critical", true);
                             $config->save();
-                            $sender->sendMessage("§l§aT§bL§r§3» §aCritical enabled!");
+                            $sender->sendMessage("§aCritical enabled!");
                             break;
 
                         case "disable":
                             $config->set("critical", false);
                             $config->save();
-                            $sender->sendMessage("§l§aT§bL§r§3» §cCritical disabled!");
+                            $sender->sendMessage("§cCritical disabled!");
                             break;
                     }
                 } else {
