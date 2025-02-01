@@ -65,11 +65,11 @@ class Main extends PluginBase implements Listener {
         $entity = $event->getEntity();
         $damager = $event->getDamager();
         
-            if ($damager instanceof Player) {
-                $name = $event->getDamager()->getName();
-                $config = new Config($this->getDataFolder() . "$name.yml", Config::YAML);
+        if ($damager instanceof Player) {
+            $name = $event->getDamager()->getName();
+            $config = new Config($this->getDataFolder() . "$name.yml", Config::YAML);
 
-                if($config->get("critical") === true) {
+            if($config->get("critical") === true) {
                 $packet = new AnimatePacket();
                 $packet->action = AnimatePacket::ACTION_CRITICAL_HIT; 
                 $packet->actorRuntimeId = $entity->getId();
