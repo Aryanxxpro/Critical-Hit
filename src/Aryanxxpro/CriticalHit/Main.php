@@ -15,7 +15,7 @@ use pocketmine\network\mcpe\protocol\AnimatePacket;
 class Main extends PluginBase implements Listener {
 
     public function onEnable(): void{
-    $this->getServer()->getPluginManager()->registerEvents($this, $this);
+        $this->getServer()->getPluginManager()->registerEvents($this, $this);
     }
 
     public function onPlayerJoin(PlayerJoinEvent $event): void {
