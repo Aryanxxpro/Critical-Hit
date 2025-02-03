@@ -33,13 +33,7 @@ class Main extends PluginBase implements Listener {
         if ($cmd->getName() === "critical") {
             if ($sender instanceof Player) {
                 $name = $sender->getName();
-                $file = $this->getDataFolder() . "$name.yml";
-
-                if (!file_exists($file)) {
-                    return false;
-                }
-
-                $config = new Config($file, Config::YAML);
+                $config = new Config($this->getDataFolder() . "$name.yml", Config::YAML);
 
                 if (isset($args[0])) {
                     switch ($args[0]) {
@@ -53,6 +47,10 @@ class Main extends PluginBase implements Listener {
                             $config->set("critical", false);
                             $config->save();
                             $sender->sendMessage("§cCritical disabled!");
+                            break;
+
+                        default:
+                            $sender->sendMessage("§cUsage: §7/critical [§aenable §7/ §cdisable§7]");
                             break;
                     }
                 } else {
@@ -73,12 +71,8 @@ class Main extends PluginBase implements Listener {
 
         if ($damager instanceof Player) {
             $name = $damager->getName();
-            $file = $this->getDataFolder() . "$name.yml";
-
-            if (!file_exists($file)) return;
-
-            $config = new Config($file, Config::YAML);
-
+            $config = new Config($this->getDataFolder() . "$name.yml", Config::YAML);
+            
             if ($config->get("critical") === true) {
                 $packet = new AnimatePacket();
                 $packet->action = AnimatePacket::ACTION_CRITICAL_HIT;
