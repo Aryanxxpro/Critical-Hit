@@ -32,40 +32,29 @@ class Main extends PluginBase implements Listener {
         }
     }
 
-    public function onCommand(CommandSender $sender, Command $cmd, string $label, array $args): bool {
-        if ($cmd->getName() === "critical") {
-            if ($sender instanceof Player) {
-                $name = $sender->getName();
-                $config = new Config($this->getDataFolder() . "$name.yml", Config::YAML);
-
-                if (isset($args[0])) {
-                    switch ($args[0]) {
-                        case "enable":
-                            $config->set("critical", true);
-                            $config->save();
-                            $sender->sendMessage("§aCritical hit enabled!");
-                            break;
-
-                        case "disable":
-                            $config->set("critical", false);
-                            $config->save();
-                            $sender->sendMessage("§cCritical hit disabled!");
-                            break;
-
-                        default:
-                            $sender->sendMessage("§cUsage: §7/critical [§aenable §7/ §cdisable§7]");
-                            break;
+    public function onCommand(CommandSender $sender, Command $command, string $label, array $args): bool {
+        $name = $sender->getName();
+        $config = new Config($this->getDataFolder() . "$name.yml", Config::YAML);
+        
+        if ($sender instanceof Player) {
+		    switch($command->getName()){
+                case "critical":
+                    if ($config->get("critical") === true) {
+                        $config->set("critical", false);
+                        $config->save();
+                        $sender->sendMessage("§cCritical hit disabled!");
+                    } else {
+                        $config->set("critical", true);
+                        $config->save();
+                        $sender->sendMessage("§aCritical hit enabled!");
                     }
-                } else {
-                    $sender->sendMessage("§cUsage: §7/critical [§aenable §7/ §cdisable§7]");
-                }
-                return true;
-            } else {
-                $sender->sendMessage("§cUse this command in-game!");
-                return false;
+                    return true;
             }
+            return true;
+        } else {
+            $sender->sendMessage("§cUse this command in-game!");
+            return false;
         }
-        return false;
     }
 
     public function onDataPacketReceive(DataPacketReceiveEvent $event): void {
