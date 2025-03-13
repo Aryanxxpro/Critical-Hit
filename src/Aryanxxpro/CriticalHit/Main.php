@@ -65,19 +65,27 @@ class Main extends PluginBase implements Listener {
         return false;
     }
 
-    public function onDamage(EntityDamageByEntityEvent $event): void {
-        $entity = $event->getEntity();
-        $damager = $event->getDamager();
-
+    public function onDataPacketReceive(DataPacketReceiveEvent $event): void {
+        $damager = $event->getOrigin()->getPlayer();
+        $packet = $event->getPacket();
+        
         if ($damager instanceof Player) {
             $name = $damager->getName();
             $config = new Config($this->getDataFolder() . "$name.yml", Config::YAML);
-            
-            if ($config->get("critical") === true) {
-                $packet = new AnimatePacket();
-                $packet->action = AnimatePacket::ACTION_CRITICAL_HIT;
-                $packet->actorRuntimeId = $entity->getId();
-                $damager->getNetworkSession()->sendDataPacket($packet);
+        
+            if ($packet instanceof InventoryTransactionPacket) {
+                $invpacket = $packet->trData;
+                
+                if ($invpacket instanceof UseItemOnEntityTransactionData) {
+                    $victim = $damager->getWorld()->getEntity($transactionType->getActorRuntimeId());
+                    
+                    if ($victim instanceof Living && $config->get("critical") === true) {
+                        $critpacket = new AnimatePacket();
+                        $critpacket->action = AnimatePacket::ACTION_CRITICAL_HIT;
+                        $critpacket->actorRuntimeId = $targetEntity->getId();
+                        $damager->getNetworkSession()->sendDataPacket($critpacket);
+                    }
+                }
             }
         }
     }
