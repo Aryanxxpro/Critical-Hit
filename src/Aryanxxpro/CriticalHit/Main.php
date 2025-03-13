@@ -80,12 +80,12 @@ class Main extends PluginBase implements Listener {
                 $invpacket = $packet->trData;
                 
                 if ($invpacket instanceof UseItemOnEntityTransactionData) {
-                    $victim = $damager->getWorld()->getEntity($transactionType->getActorRuntimeId());
+                    $victim = $damager->getWorld()->getEntity($invpacket->getActorRuntimeId());
                     
                     if ($victim instanceof Living && $config->get("critical") === true) {
                         $critpacket = new AnimatePacket();
                         $critpacket->action = AnimatePacket::ACTION_CRITICAL_HIT;
-                        $critpacket->actorRuntimeId = $targetEntity->getId();
+                        $critpacket->actorRuntimeId = $victim->getId();
                         $damager->getNetworkSession()->sendDataPacket($critpacket);
                     }
                 }
